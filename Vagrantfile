@@ -65,7 +65,13 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
  #config.vm.provision "shell", path: "scenario.sh"
- 
+ config.vm.define "haproxy" do |haproxy|
+  haproxy.vm.box = "centos/7"
+  haproxy.vm.network "forwarded_port", guest: 80, host: 8083
+  haproxy.vm.network "private_network", ip: "192.168.56.10"
+  haproxy.vm.network "public_network"
+  haproxy.vm.provision "shell", path: "scenario_haproxy.sh"
+end
  config.vm.define "balancer" do |balancer|
   balancer.vm.box = "centos/7"
   balancer.vm.network "forwarded_port", guest: 80, host: 8082
@@ -94,6 +100,20 @@ config.vm.define "web1" do |web1|
   web1.vm.network "private_network", ip: "192.168.56.6"
   web1.vm.network "public_network"
   web1.vm.provision "shell", path: "scenario_web1.sh"
+end
+config.vm.define "web2" do |web2|
+  web2.vm.box = "centos/7"
+  web2.vm.network "forwarded_port", guest: 80, host: 8084
+  web2.vm.network "private_network", ip: "192.168.56.11"
+  web2.vm.network "public_network"
+  web2.vm.provision "shell", path: "scenario_web2.sh"
+end
+config.vm.define "web3" do |web3|
+  web3.vm.box = "centos/7"
+  web3.vm.network "forwarded_port", guest: 80, host: 8085
+  web3.vm.network "private_network", ip: "192.168.56.12"
+  web3.vm.network "public_network"
+  web3.vm.provision "shell", path: "scenario_web3.sh"
 end
 
 end

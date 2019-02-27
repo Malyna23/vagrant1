@@ -18,9 +18,10 @@ sudo sed -i -e "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /var
 sudo sed -i -e "s/#port = 5432/port = 5432/g" /var/lib/pgsql/11/data/postgresql.conf
 sudo cat <<EOF | sudo tee -a /var/lib/pgsql/11/data/pg_hba.conf
 host    all             all              192.168.56.3/32        password
-EOF
-sudo cat <<EOF | sudo tee -a /var/lib/pgsql/11/data/pg_hba.conf
 host    all             all              192.168.56.6/32        password
+host    all             all              192.168.56.11/32        password
+host    all             all              192.168.56.12/32        password
 EOF
+
 sudo systemctl restart postgresql-11
 
