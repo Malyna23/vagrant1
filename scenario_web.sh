@@ -25,6 +25,12 @@ sudo rm -rf /var/www/html/
 sudo tar -zxvf moodle-latest-36.tgz -C /var/www/
 sudo mv /var/www/moodle /var/www/html
 sudo setsebool httpd_can_network_connect true
-sudo /usr/bin/php /var/www/html/admin/cli/install.php --wwwroot=http://192.168.56.3/ --dataroot=/var/moodledata --dbtype=pgsql --dbhost=192.168.56.4 --dbport=5432 --dbname=dbname --dbuser=dbname --dbpass=dbname --fullname="Moodle" --adminpass=1Qaz2wsx$  --shortname="Moodle" --non-interactive --agree-license
+sudo /usr/bin/php /var/www/html/admin/cli/install.php --wwwroot=http://192.168.56.2/ --dataroot=/var/moodledata --dbtype=pgsql --dbhost=192.168.56.4 --dbport=5432 --dbname=dbname --dbuser=dbname --dbpass=dbname --fullname="Moodle" --adminpass=1Qaz2wsx$  --shortname="Moodle" --non-interactive --agree-license
 sudo chmod a+r /var/www/html/config.php
 sudo chcon -R -t httpd_sys_rw_content_t /var/moodledata
+sudo systemctl start firewalld.service
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+  rule family="ipv4"
+  source address="192.168.56.2/32"
+  port protocol="tcp" port="80" accept'
+sudo firewall-cmd --reload

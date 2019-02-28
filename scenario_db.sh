@@ -25,3 +25,22 @@ EOF
 
 sudo systemctl restart postgresql-11
 
+sudo systemctl start firewalld.service
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+   rule family="ipv4"
+   source address="192.168.56.3/32"
+   port protocol="tcp" port="5432" accept'
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+   rule family="ipv4"
+   source address="192.168.56.6/32"
+   port protocol="tcp" port="5432" accept'
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+   rule family="ipv4"
+   source address="192.168.56.11/32"
+   port protocol="tcp" port="5432" accept'
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+   rule family="ipv4"
+   source address="192.168.56.12/32"
+   port protocol="tcp" port="5432" accept'
+sudo firewall-cmd --reload
+

@@ -48,7 +48,7 @@ global \$CFG;
   'dbsocket' => '',
 );
 
-\$CFG->wwwroot   = 'http://192.168.56.11';
+\$CFG->wwwroot   = 'http://192.168.56.10';
 \$CFG->dataroot  = '/var/moodledata';
 \$CFG->admin     = 'admin';
 
@@ -58,3 +58,9 @@ require_once(__DIR__ . '/lib/setup.php');
 
 // There is no php closing tag in this file,
 // it is intentional because it prevents trailing whitespace problems!" > /var/www/html/config.php
+sudo systemctl start firewalld.service
+sudo firewall-cmd --permanent --zone=public --add-rich-rule='
+  rule family="ipv4"
+  source address="192.168.56.10/32"
+  port protocol="tcp" port="80" accept'
+sudo firewall-cmd --reload

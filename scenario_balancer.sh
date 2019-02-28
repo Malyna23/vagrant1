@@ -27,7 +27,7 @@ events {
 
 http {
 
-upstream backend  {
+upstream 192.168.56.2  {
   server 192.168.56.3;
   server 192.168.56.6;
 }
@@ -63,7 +63,7 @@ upstream backend  {
         include /etc/nginx/default.d/*.conf;
 
         location / {
-        proxy_pass  http://backend;
+        proxy_pass  http://192.168.56.2;
         }
 
         error_page 404 /404.html;
